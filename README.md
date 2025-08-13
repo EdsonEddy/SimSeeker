@@ -40,12 +40,23 @@ cd ..
 
 ```sh
 cd grammar
-java -Xmx500M -cp "../tools/antlr-4.13.1-complete.jar" org.antlr.v4.Tool \
-    -Dlanguage=Python3 \
-    -visitor \
-    -o ../gen \
-    Python3Parser.g4 Python3Lexer.g4
+java -jar ../tools/antlr-4.13.1-complete.jar -Dlanguage=Python3 -visitor -o ../gen Python3Parser.g4 Python3Lexer.g4
 cd ..
+```
+
+### 4. Download Python3LexerBase and Python3ParserBase Files
+```sh
+cd gen
+curl -O https://raw.githubusercontent.com/antlr/grammars-v4/master/python/python3/Python3/Python3LexerBase.py
+curl -O https://raw.githubusercontent.com/antlr/grammars-v4/master/python/python3/Python3/Python3ParserBase.py
+cd ..
+```
+
+### 5. Fix generated files
+The generated files may need some adjustments to work correctly. Open the files in `gen/` and make the following changes:
+- In `Python3Lexer.py`, replace `this.` with `self.`.
+```sh
+sed -i '' 's/this\./self\./g' gen/Python3Lexer.py
 ```
 
 ## Project Structure
